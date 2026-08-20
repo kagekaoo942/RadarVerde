@@ -13,7 +13,7 @@ body {
 
 /* HEADER COMPACTO */
 header {
-    background: rgba(11, 14, 20, 0.9);
+    background: #fff;
     backdrop-filter: blur(8px);
     padding: 0.8rem 2rem;
     display: flex;
@@ -24,15 +24,10 @@ header {
     z-index: 100;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-.logo {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: #00FF87;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.logo img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
 }
 
 nav {
