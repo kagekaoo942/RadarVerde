@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #0B0E14;
+    color: #E2E8F0;
+    line-height: 1.5;
+}
+
+/* HEADER COMPACTO */
+header {
+    background: rgba(11, 14, 20, 0.9);
+    backdrop-filter: blur(8px);
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #00FF87;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+nav a {
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: #00FF87;
+}
+
+/* BOTONES */
+.btn-green {
+    background-color: #00FF87;
+    color: #0B0E14;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+}
+
+.btn-green:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.4);
+}
+
+/* LAYOUT Y SECCIONES */
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+section {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 3.5rem 1rem 2.5rem 1rem;
+    background: radial-gradient(circle at center, rgba(0, 255, 135, 0.08) 0%, rgba(11, 14, 20, 1) 70%);
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    color: #FFF;
+    margin-bottom: 0.8rem;
+}
+
+.hero p {
+    color: #94A3B8;
+    max-width: 580px;
+    margin: 0 auto 1.5rem auto;
+    font-size: 0.95rem;
+}
+
+/* GRID DE 2 COLUMNAS (MISIÓN Y BENEFICIOS) */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.card-mision {
+    background: #131822;
+    border: 1px solid rgba(0, 255, 135, 0.2);
+    border-radius: 10px;
+    padding: 1.8rem;
+}
+
+.card-mision h2 {
+    font-size: 1.3rem;
+    color: #00FF87;
+    margin-bottom: 0.8rem;
+}
+
+.card-mision p {
+    font-size: 0.9rem;
+    color: #CBD5E1;
+}
+
+.benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.benefit-item {
+    background: #131822;
+    padding: 0.9rem 1.2rem;
+    border-radius: 8px;
+    border-left: 3px solid #00FF87;
+}
+
+.benefit-item h4 {
+    font-size: 0.9rem;
+    color: #FFF;
+    margin-bottom: 0.2rem;
+}
+
+.benefit-item p {
+    font-size: 0.8rem;
+    color: #94A3B8;
+}
+
+/* FUNCIONALIDADES */
+.section-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #FFF;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+.card-feature {
+    background: #131822;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.2rem;
+    transition: border-color 0.2s;
+}
+
+.card-feature:hover {
+    border-color: rgba(0, 255, 135, 0.3);
+}
+
+.icon-box {
+    font-size: 1.5rem;
+    color: #00FF87;
+    margin-bottom: 0.6rem;
+}
+
+.card-feature h3 {
+    font-size: 1rem;
+    color: #FFF;
+    margin-bottom: 0.4rem;
+}
+
+.card-feature p {
+    font-size: 0.82rem;
+    color: #94A3B8;
+}
+
+/* BANNER CTA */
+.cta-banner {
+    background: linear-gradient(90deg, #131822 0%, #1A2332 100%);
+    border-radius: 10px;
+    padding: 1.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cta-banner h2 {
+    font-size: 1.3rem;
+    color: #FFF;
+    margin-bottom: 0.3rem;
+}
+
+.cta-banner p {
+    font-size: 0.85rem;
+    color: #94A3B8;
+}
+
+/* FOOTER */
+footer {
+    padding: 1.5rem 0;
+    background-color: #080A0E;
+    font-size: 0.8rem;
+    color: #64748B;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.socials {
+    display: flex;
+    gap: 1rem;
+}
+
+.socials a {
+    color: #64748B;
+    text-decoration: none;
+}
+
+.socials a:hover {
+    color: #00FF87;
+}
+
+/* ADAPTACIÓN MÓVIL */
+@media (max-width: 768px) {
+
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    header {
+        padding: 0.8rem 1rem;
+    }
+}
