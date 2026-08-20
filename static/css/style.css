@@ -61,10 +61,31 @@ nav a:hover {
     color: #00FF87;
 }
 
-/* BOTÓN GUÍA (EFECTO GLOW LIMITADO ÚNICAMENTE AL BOTÓN) */
+/* BOTÓN VERDE ESTÁNDAR (HEADER Y HERO) */
+.btn-green {
+    background-color: #00FF87;
+    color: #0B0E14;
+    font-weight: 700;
+    padding: 9px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-green:hover {
+    background-color: #12FF8F;
+    transform: translateY(-1px);
+    box-shadow: 0px 0px 14px rgba(0, 255, 135, 0.5);
+    color: #0B0E14;
+}
+
+/* BOTÓN GUÍA (EFECTO GLOW MULTICOLOR) */
 .btn-guia {
     position: relative;
-    /* Evita que el gradiente se extienda a todo el header */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -76,7 +97,6 @@ nav a:hover {
     border-radius: 5px;
     z-index: 1;
     background: #131822;
-    /* Fondo base para legibilidad del texto */
 }
 
 .btn-guia::after {
@@ -125,11 +145,6 @@ nav a:hover {
 
 .btn-guia:hover::before {
     background-position: 100%;
-}
-
-.btn-green:hover {
-    transform: translateY(-1px);
-    box-shadow: 0px 0px 12px rgba(0, 255, 135, 0.4);
 }
 
 /* LAYOUT Y SECCIONES */
