@@ -5,7 +5,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+html,
 body {
+    width: 100%;
+    min-height: 100vh;
     background-color: #0B0E14;
     color: #E2E8F0;
     line-height: 1.5;
@@ -31,7 +34,7 @@ header {
 }
 
 .logo img {
-    height:90px;
+    height: 90px;
     width: auto;
     object-fit: contain;
     filter: brightness(2.2) contrast(120%) drop-shadow(0px 0px 8px rgba(0, 255, 135, 0.35));
@@ -39,8 +42,8 @@ header {
 }
 
 .logo img:hover {
-    transform: scale(1.03);
-    filter: brightness(2.5) drop-shadow(0px 0px 12px rgba(0, 255, 135, 0.6));
+    transform: scale(1.05);
+    filter: brightness(2.3) contrast(115%) drop-shadow(0px 0px 5px rgba(0, 255, 135, 0.7));
 }
 
 /* NAVEGACIÓN Y ENLACES */
@@ -61,7 +64,7 @@ nav a:hover {
     color: #00FF87;
 }
 
-/* BOTÓN VERDE ESTÁNDAR (HEADER Y HERO) */
+/* Boton verde */
 .btn-green {
     background-color: #00FF87;
     color: #0B0E14;
@@ -83,68 +86,93 @@ nav a:hover {
     color: #0B0E14;
 }
 
-/* BOTÓN GUÍA (EFECTO GLOW MULTICOLOR) */
-.btn-guia {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+/* BOTÓN BASE */
+.btn-mapa {
     padding: 10px 20px;
-    color: #FFFFFF;
+    border: none;
+    outline: none;
+    color: #94A3B8;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 12px;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 5px;
-    z-index: 1;
-    background: #131822;
+
 }
 
-.btn-guia::after {
+/* FONDO OSCURO INTERNO (después del glow) */
+.btn-mapa::after {
     content: "";
+    z-index: -1;
     position: absolute;
-    top: 0px;
-    left: 0px;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(90deg,
-            rgba(255, 0, 128, 1),
-            rgba(0, 191, 255, 1),
-            rgba(0, 255, 128, 1),
-            rgba(255, 255, 0, 1),
-            rgba(255, 128, 0, 1),
-            rgba(255, 0, 0, 1));
-    background-size: 300%;
-    border-radius: 5px;
-    transition: all 0.6s ease;
-    z-index: -1;
+    background-color: #131822;
+    /* O el color oscuro de tu fondo */
+    left: 0;
+    top: 0;
+    border-radius: 10px;
 }
 
-.btn-guia:hover::after {
-    background-position: 100%;
-    filter: blur(15px);
-}
-
-.btn-guia::before {
+/* EFECTO DE RESPLANDOR GRADIENTE (Glow) */
+.btn-mapa::before {
     content: "";
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #ff00c8, #ff0000);
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(90deg,
-            rgba(255, 0, 128, 1),
-            rgba(0, 191, 255, 1),
-            rgba(0, 255, 128, 1),
-            rgba(255, 255, 0, 1),
-            rgba(255, 128, 0, 1),
-            rgba(255, 0, 0, 1));
-    background-size: 300%;
-    border-radius: 5px;
+    top: -2px;
+    left: -2px;
+    background-size: 600%;
     z-index: -1;
+    /* Va detrás del ::after */
+    width: calc(100% + 4px);
+    /* Asegúrate del % aquí */
+    height: calc(100% + 4px);
+    /* Asegúrate del % aquí */
+    filter: blur(8px);
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+    opacity: 1;
 }
 
-.btn-guia:hover::before {
-    background-position: 100%;
+@keyframes glowing {
+
+    0% {
+
+        background-position: 0 0;
+
+    }
+
+
+
+    50% {
+
+        background-position: 400% 0;
+
+    }
+
+
+
+    100% {
+
+        background-position: 0 0;
+
+    }
+
+}
+
+/* HOVER Y ACTIVE */
+.btn-mapa:hover::before {
+    opacity: 1;
+}
+
+.btn-mapa:active::after {
+    background: transparent;
+}
+
+.btn-mapa:active {
+    color: #000;
+    font-weight: bold;
 }
 
 /* LAYOUT Y SECCIONES */
@@ -166,20 +194,20 @@ h3 {
     letter-spacing: 0.5px;
 }
 
-/* HERO */
-.hero {
+/* tarjeta inicial */
+.card-inicio {
     text-align: center;
     padding: 56px 16px 40px 16px;
     background: radial-gradient(circle at center, rgba(0, 255, 135, 0.08) 0px, rgba(11, 14, 20, 1) 70%);
 }
 
-.hero h1 {
+.card-inicio h1 {
     font-size: 35px;
     color: #FFF;
     margin-bottom: 13px;
 }
 
-.hero p {
+.card-inicio p {
     color: #94A3B8;
     max-width: 580px;
     margin: 0px auto 24px auto;
