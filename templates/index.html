@@ -15,15 +15,18 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- header -->
     <header>
+        <!-- logo y titulo -->
         <div class="logo">
             <img src="/static/images/logo.png" alt="Logo">
+            <h1 class="brand-title">
+                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
+            </h1>
         </div>
         <nav>
             <a href="#">Inicio</a>
-            <a href="#">Plataforma</a>
-            <a href="#" class="btn-mapa">Acceso Mapa</a>
+            <a href="{{ url_for('visor_mapa') }}" class="btn-mapa">Acceso Mapa</a>
         </nav>
     </header>
 

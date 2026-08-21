@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RadarVerde - Visor Geográfico</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="map-body">
+
+    <!-- HEADER COMPACTO -->
+    <header>
+        <div class="logo">
+            <img src="tu-logo.png" alt="Logo">
+            <h1 class="brand-title">
+                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
+            </h1>
+        </div>
+        <nav>
+            <a href="index.html">← Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <!-- INTERFAZ DEL MAPA -->
+    <div class="map-container">
+        <!-- PANEL LATERAL DE CAPAS/FILTROS -->
+        <aside class="map-sidebar">
+            <h2>Capas de Análisis</h2>
+            <p>Selecciona las capas para visualizar datos en tiempo real:</p>
+
+            <div class="filter-group">
+                <label><input type="checkbox" checked> Cobertura Vegetal (NDVI)</label>
+                <label><input type="checkbox"> Zonas de Sombra Urbana</label>
+                <label><input type="checkbox"> Islas de Calor</label>
+            </div>
+
+            <div class="stats-box">
+                <h4>Diagnóstico Sector</h4>
+                <p><strong>Cobertura:</strong> 18.4%</p>
+                <p><strong>Prioridad:</strong> Alta</p>
+            </div>
+        </aside>
+
+        <!-- ÁREA DONDE SE CARGA EL MAPA -->
+        <main id="map">
+            <div class="map-placeholder">
+                <p>Cargando visor cartográfico...</p>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

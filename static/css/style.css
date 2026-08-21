@@ -26,24 +26,55 @@ header {
     top: 0px;
     z-index: 100;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
 }
 
 .logo {
     display: flex;
     align-items: center;
+    gap: 12px;
+    pointer-events: none;
+    /* Inhabilita clics e interacciones */
 }
 
+/* IMAGEN DEL LOGO CON TAMAÑO ADECUADO */
 .logo img {
     height: 90px;
+    /* Reducido de 90px para encajar en el header */
     width: auto;
     object-fit: contain;
-    filter: brightness(2.2) contrast(120%) drop-shadow(0px 0px 8px rgba(0, 255, 135, 0.35));
-    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: brightness(2) contrast(110%) drop-shadow(0px 0px 4px rgba(0, 255, 135, 0.4));
 }
 
-.logo img:hover {
-    transform: scale(1.05);
-    filter: brightness(2.3) contrast(115%) drop-shadow(0px 0px 5px rgba(0, 255, 135, 0.7));
+/* TÍTULO EN LÍNEA JUNTO AL LOGO */
+.brand-title {
+    position: static;
+    /* Se corrigió 'relat' por 'static' */
+    transform: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    cursor: default;
+}
+
+/* TEXTO BLANCO PLANO */
+.radar-text {
+    color: #FFFFFF;
+    text-shadow: none;
+}
+
+/* TEXTO VERDE NEÓN */
+.verde-text {
+    background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 0px 8px rgba(0, 255, 135, 0.6));
 }
 
 /* NAVEGACIÓN Y ENLACES */
@@ -94,13 +125,16 @@ nav a:hover {
     color: #94A3B8;
     cursor: pointer;
     position: relative;
-    z-index: 0;
+    z-index: 1;
     border-radius: 12px;
     text-decoration: none;
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.1s ease;
 }
 
-/* FONDO OSCURO INTERNO (después del glow) */
+/* FONDO OSCURO INTERNO (Por defecto) */
 .btn-mapa::after {
     content: "";
     z-index: -1;
@@ -108,13 +142,13 @@ nav a:hover {
     width: 100%;
     height: 100%;
     background-color: #131822;
-    /* O el color oscuro de tu fondo */
     left: 0;
     top: 0;
     border-radius: 10px;
+    transition: background 0.2s ease;
 }
 
-/* EFECTO DE RESPLANDOR GRADIENTE (Glow) */
+/* RESPLANDOR EXTERIOR (Borde que brilla en hover) */
 .btn-mapa::before {
     content: "";
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #ff00c8, #ff0000);
@@ -122,43 +156,29 @@ nav a:hover {
     top: -2px;
     left: -2px;
     background-size: 600%;
-    z-index: -1;
-    /* Va detrás del ::after */
+    z-index: -2;
     width: calc(100% + 4px);
-    /* Asegúrate del % aquí */
     height: calc(100% + 4px);
-    /* Asegúrate del % aquí */
     filter: blur(8px);
     animation: glowing 20s linear infinite;
     transition: opacity .3s ease-in-out;
-    border-radius: 10px;
+    border-radius: 12px;
     opacity: 1;
+    /* Oculto hasta pasar el cursor */
 }
 
 @keyframes glowing {
-
     0% {
-
         background-position: 0 0;
-
     }
-
-
 
     50% {
-
         background-position: 400% 0;
-
     }
-
-
 
     100% {
-
         background-position: 0 0;
-
     }
-
 }
 
 /* HOVER Y ACTIVE */
@@ -166,13 +186,17 @@ nav a:hover {
     opacity: 1;
 }
 
-.btn-mapa:active::after {
-    background: transparent;
-}
-
+/* AL HACER CLICK: El interior se llena con el gradiente animado y nítido */
 .btn-mapa:active {
     color: #000;
     font-weight: bold;
+    transform: scale(0.97);
+}
+
+.btn-mapa:active::after {
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #ff00c8, #ff0000);
+    background-size: 600%;
+    animation: glowing 20s linear infinite;
 }
 
 /* LAYOUT Y SECCIONES */
@@ -330,6 +354,74 @@ h3 {
     color: #94A3B8;
 }
 
+/* boton de guia */
+/* BOTÓN GUÍA */
+.btn-guia {
+    position: relative;
+    padding: 12px 24px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    z-index: 1;
+    background: #131822;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-guia::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(90deg,
+            rgba(255, 0, 128, 1),
+            rgba(0, 191, 255, 1),
+            rgba(0, 255, 128, 1),
+            rgba(255, 255, 0, 1),
+            rgba(255, 128, 0, 1),
+            rgba(255, 0, 0, 1));
+    background-size: 300%;
+    border-radius: 5px;
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+
+.btn-guia:hover::after {
+    background-position: 100%;
+    filter: blur(15px);
+}
+
+.btn-guia::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(90deg,
+            rgba(255, 0, 128, 1),
+            rgba(0, 191, 255, 1),
+            rgba(0, 255, 128, 1),
+            rgba(255, 255, 0, 1),
+            rgba(255, 128, 0, 1),
+            rgba(255, 0, 0, 1));
+    background-size: 300%;
+    border-radius: 5px;
+    z-index: -1;
+}
+
+.btn-guia:hover::before {
+    background-position: 100%;
+}
+
 /* FOOTER */
 footer {
     padding: 24px 0px;
@@ -375,4 +467,121 @@ footer {
     header {
         padding: 13px 16px;
     }
+}
+
+/* ==========================================
+   ESTILOS EXCLUSIVOS PARA MAPA.HTML
+   ========================================== */
+
+/* Ajusta la pantalla completa para la vista del mapa sin scroll */
+.map-body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Contenedor principal que divide el panel y el mapa */
+.map-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 65px); /* Resta la altura aproximada del header */
+    width: 100%;
+}
+
+/* PANEL LATERAL DE CONTROLES / FILTROS */
+.map-sidebar {
+    width: 320px;
+    background-color: #131822;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 10;
+}
+
+.map-sidebar h2 {
+    font-size: 18px;
+    color: #00FF87;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.map-sidebar p {
+    font-size: 13px;
+    color: #94A3B8;
+}
+
+/* GRUPO DE CHECKBOXES / CAPAS */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.filter-group label {
+    font-size: 14px;
+    color: #E2E8F0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.filter-group label:hover {
+    color: #00FF87;
+}
+
+.filter-group input[type="checkbox"] {
+    accent-color: #00FF87;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* CUADRO DE MÉTRICAS O ESTADÍSTICAS DEL SECTOR */
+.stats-box {
+    margin-top: auto;
+    background-color: #0B0E14;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 135, 0.2);
+}
+
+.stats-box h4 {
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.stats-box p {
+    font-size: 13px;
+    color: #94A3B8;
+    margin-bottom: 4px;
+}
+
+.stats-box p strong {
+    color: #00FF87;
+}
+
+/* ÁREA DEL MAPA INTERACTIVO */
+#map {
+    flex: 1;
+    height: 100%;
+    background-color: #080A0E;
+    position: relative;
+}
+
+/* Mensaje temporal mientras se carga la librería del mapa */
+.map-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748B;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
 }
