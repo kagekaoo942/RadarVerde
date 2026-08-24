@@ -1,2 +1,0 @@
-# RadarVerde
-emprendimiento

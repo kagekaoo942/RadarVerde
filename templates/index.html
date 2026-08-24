@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>RadarVerde - Inteligencia Espacial</title>
     <!-- Fuente externa -->
     <link rel="stylesheet"
@@ -15,15 +15,18 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- header -->
     <header>
+        <!-- logo y titulo -->
         <div class="logo">
-            <img src="/static/images/logo.png" alt="Logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            <h1 class="brand-title">
+                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
+            </h1>
         </div>
         <nav>
             <a href="#">Inicio</a>
-            <a href="#">Plataforma</a>
-            <a href="#" class="btn-mapa">Acceso Mapa</a>
+            <a href="{{ url_for('mapa') }}" class="btn-mapa">Acceso Mapa</a>
         </nav>
     </header>
 
