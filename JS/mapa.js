@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. UI DEL SLIDER 
     const sliderContainer = document.createElement('div');
+    sliderContainer.className = 'solar-slider';
     sliderContainer.style.cssText = 'position: absolute; bottom: 30px; left: 20px; z-index: 999; background: rgba(19, 24, 34, 0.95); padding: 15px 25px; border: 1px solid rgba(0, 255, 135, 0.5); border-radius: 8px; width: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; flex-direction: column; gap: 8px;';
     sliderContainer.innerHTML = `
         <div style="display:flex; justify-content: space-between; align-items: center; color: #00FF87; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: bold;">
