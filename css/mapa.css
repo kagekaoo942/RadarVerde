@@ -2,7 +2,8 @@
    ESTILOS EXCLUSIVOS - MAPA.HTML (RADARVERDE)
    ========================================== */
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -169,9 +170,11 @@ nav a:hover {
 
 #map {
     width: 100%;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    height: 100vh;
+    /* Ocupa toda la altura de la pantalla */
     flex-grow: 1;
 }
+
 /* MODO OSCURO EQUILIBRADO (Gris Pizarra / Slate Theme) */
 .leaflet-tile-pane {
     filter: invert(95%) hue-rotate(180deg) brightness(0.95) contrast(1.1);
@@ -211,3 +214,43 @@ nav a:hover {
     transition: fill-opacity 0.3s ease;
 }
 
+/* Estilo base por defecto (Computadores y pantallas grandes) */
+.contenedor-principal {
+    display: flex;
+    height: 100vh;
+}
+
+.panel-lateral {
+    width: 300px;
+    /* tus estilos actuales de la barra lateral */
+}
+
+#map {
+    flex: 1;
+    height: 100%;
+}
+
+/* Responsivo para celulares y tablets pequeñas (menores a 768px) */
+@media (max-width: 768px) {
+    .contenedor-principal {
+        flex-direction: column;
+        /* Apila los elementos verticalmente */
+        height: auto;
+    }
+
+    .panel-lateral {
+        width: 100%;
+        /* El panel ocupa todo el ancho del celular */
+        height: auto;
+        max-height: 250px;
+        /* Evita que el panel opaque todo el mapa */
+        overflow-y: auto;
+        /* Permite hacer scroll si hay muchas opciones */
+    }
+
+    #map {
+        width: 100%;
+        height: 60vh;
+        /* El mapa ocupa el 60% de la altura de la pantalla del celular */
+    }
+}

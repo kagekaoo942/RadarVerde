@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sliderContainer.style.cssText = 'position: absolute; bottom: 30px; left: 20px; z-index: 999; background: rgba(19, 24, 34, 0.95); padding: 15px 25px; border: 1px solid rgba(0, 255, 135, 0.5); border-radius: 8px; width: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; flex-direction: column; gap: 8px;';
     sliderContainer.innerHTML = `
         <div style="display:flex; justify-content: space-between; align-items: center; color: #00FF87; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: bold;">
-            <span>☀️ Luz Solar 3D</span>
+            <span><i class="bi bi-sun-fill" aria-hidden="true"></i> Luz Solar 3D</span>
             <span id="time-display" style="background: rgba(0,255,135,0.1); padding: 4px 10px; border-radius: 4px;">Atardecer</span>
         </div>
         <input type="range" id="time-slider" min="1" max="4" step="1" value="3" style="width: 100%; cursor: pointer; margin-top: 10px; accent-color: #00FF87;">
