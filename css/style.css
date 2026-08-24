@@ -9,6 +9,7 @@ html,
 body {
     width: 100%;
     min-height: 100vh;
+    overflow-x: hidden;
     background-color: #0B0E14;
     color: #E2E8F0;
     line-height: 1.5;
@@ -453,6 +454,43 @@ footer {
 /* ADAPTACIÓN MÓVIL */
 @media (max-width: 768px) {
 
+    header {
+        padding: 10px 16px;
+        gap: 12px;
+    }
+
+    .logo {
+        min-width: 0;
+        gap: 7px;
+    }
+
+    .logo img {
+        height: 56px;
+    }
+
+    .brand-title {
+        font-size: 16px;
+        letter-spacing: 0.5px;
+    }
+
+    nav {
+        gap: 8px;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+    .btn-mapa {
+        padding: 8px 10px;
+        text-align: center;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 16px;
+    }
+
     .grid-2,
     .grid-3 {
         grid-template-columns: 1fr;
@@ -464,7 +502,63 @@ footer {
         gap: 16px;
     }
 
+    .card-inicio {
+        padding: 42px 0 32px;
+    }
+
+    .card-inicio h1 {
+        font-size: 27px;
+        line-height: 1.25;
+    }
+
+    .card-inicio p {
+        font-size: 13px;
+    }
+
+    section {
+        padding: 32px 0;
+    }
+
+    .card-mision {
+        padding: 20px;
+    }
+
+    .cta-banner {
+        padding: 22px 18px;
+    }
+
+    .cta-banner h2 {
+        font-size: 18px;
+    }
+
+    .footer-content,
+    .socials {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 420px) {
+
     header {
-        padding: 13px 16px;
+        align-items: flex-start;
+    }
+
+    .logo img {
+        height: 48px;
+    }
+
+    .brand-title {
+        font-size: 13px;
+    }
+
+    nav a:not(.btn-mapa) {
+        display: none;
+    }
+
+    .btn-mapa {
+        max-width: 72px;
+        line-height: 1.2;
     }
 }
