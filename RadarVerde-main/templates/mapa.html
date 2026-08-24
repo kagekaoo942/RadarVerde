@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RadarVerde - Comuna de San Ramón</title>
+
+    <!-- Mapbox GL JS CSS (Reemplaza el CSS antiguo de Leaflet) -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@900&display=swap"
+        rel="stylesheet">
+
+    <!-- Hojas de Estilo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mapa.css') }}">
+</head>
+
+<body class="map-body">
+
+    <!-- HEADER COMPACTO -->
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            <h1 class="brand-title">
+                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
+            </h1>
+        </div>
+        <nav>
+            <a href="{{ url_for('mapa') }}">← Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <!-- INTERFAZ DEL MAPA -->
+    <div class="map-container">
+        <!-- PANEL LATERAL -->
+        <aside class="map-sidebar">
+            <h2>San Ramón</h2>
+            <p>Monitoreo geográfico exclusivo de la comuna.</p>
+
+            <div class="filter-group">
+                <label>
+                    <input type="checkbox" id="layer-ndvi" checked> Cobertura Vegetal (NDVI)
+                </label>
+                <label>
+                    <input type="checkbox" id="layer-sombra"> Zonas de Sombra Urbana
+                </label>
+                <label>
+                    <input type="checkbox" id="layer-calor"> Islas de Calor
+                </label>
+            </div>
+            <div class="stats-box">
+                <h4>Diagnóstico de la comuna</h4>
+                <p><strong>Sector:</strong> San Ramón</p>
+                <p><strong>Cobertura vegetal:</strong> 18.4%</p>
+                <p><strong>Prioridad:</strong> Alta</p>
+            </div>
+        </aside>
+
+        <!-- MAPA -->
+        <main id="map"></main>
+    </div>
+
+    <!-- Script de Mapbox GL JS (Reemplaza los scripts antiguos) -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+
+    <!-- Tu script del mapa -->
+    <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+</body>
+</html>
