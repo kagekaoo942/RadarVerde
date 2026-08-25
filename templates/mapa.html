@@ -29,7 +29,10 @@
             </h1>
         </div>
         <nav>
-            <a href="{{ url_for('index') }}">← Volver al Inicio</a>
+            <div class="estado-contenedor" title="Estado del Sistema">
+                <span id="indicador-estado" class="circulo-estado"></span>
+                <span class="texto-estado">Comprobando...</span>
+            </div>
         </nav>
     </header>
 
@@ -68,5 +71,6 @@
 
     <!-- Tu script del mapa -->
     <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/estado.js') }}"></script>
 </body>
 </html>

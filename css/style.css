@@ -27,7 +27,6 @@ header {
     top: 0px;
     z-index: 100;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    position: relative;
 }
 
 .logo {
@@ -35,13 +34,11 @@ header {
     align-items: center;
     gap: 12px;
     pointer-events: none;
-    /* Inhabilita clics e interacciones */
 }
 
 /* IMAGEN DEL LOGO CON TAMAÑO ADECUADO */
 .logo img {
     height: 90px;
-    /* Reducido de 90px para encajar en el header */
     width: auto;
     object-fit: contain;
     filter: brightness(2) contrast(110%) drop-shadow(0px 0px 4px rgba(0, 255, 135, 0.4));
@@ -50,7 +47,6 @@ header {
 /* TÍTULO EN LÍNEA JUNTO AL LOGO */
 .brand-title {
     position: static;
-    /* Se corrigió 'relat' por 'static' */
     transform: none;
     font-family: 'Orbitron', sans-serif;
     font-size: 22px;
@@ -85,15 +81,48 @@ nav {
     gap: 24px;
 }
 
-nav a {
-    color: #94A3B8;
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.2s;
+/* ESTILOS PARA EL INDICADOR DE ESTADO (NUEVO) */
+.estado-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-nav a:hover {
+.texto-estado {
+    color: #94A3B8;
+    font-size: 13px;
+}
+
+.circulo-estado {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: transparent;
+    border: 1px solid #64748B;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estado Inactivo (Rojo Neón) */
+.circulo-estado.inactivo {
+    background-color: #FF3333;
+    border-color: #FF3333;
+    box-shadow: 0 0 10px #FF3333, 0 0 20px #FF3333;
+}
+
+/* Estado Activo (Verde Neón) */
+.circulo-estado.activo {
+    background-color: #00FF87;
+    border-color: #00FF87;
+    box-shadow: 0 0 10px #00FF87, 0 0 20px #00FF87;
+}
+
+.texto-estado.activo {
     color: #00FF87;
+}
+
+.texto-estado.inactivo {
+    color: #FF6B6B;
 }
 
 /* Boton verde */
@@ -149,7 +178,7 @@ nav a:hover {
     transition: background 0.2s ease;
 }
 
-/* RESPLANDOR EXTERIOR (Borde que brilla en hover) */
+/* RESPLANDOR EXTERIOR */
 .btn-mapa::before {
     content: "";
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #ff00c8, #ff0000);
@@ -165,29 +194,18 @@ nav a:hover {
     transition: opacity .3s ease-in-out;
     border-radius: 12px;
     opacity: 1;
-    /* Oculto hasta pasar el cursor */
 }
 
 @keyframes glowing {
-    0% {
-        background-position: 0 0;
-    }
-
-    50% {
-        background-position: 400% 0;
-    }
-
-    100% {
-        background-position: 0 0;
-    }
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
 }
 
-/* HOVER Y ACTIVE */
 .btn-mapa:hover::before {
     opacity: 1;
 }
 
-/* AL HACER CLICK: El interior se llena con el gradiente animado y nítido */
 .btn-mapa:active {
     color: #000;
     font-weight: bold;
@@ -212,9 +230,7 @@ section {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 0.5px;
 }
@@ -355,7 +371,6 @@ h3 {
     color: #94A3B8;
 }
 
-/* boton de guia */
 /* BOTÓN GUÍA */
 .btn-guia {
     position: relative;
@@ -453,7 +468,6 @@ footer {
 
 /* ADAPTACIÓN MÓVIL */
 @media (max-width: 768px) {
-
     header {
         padding: 10px 16px;
         gap: 12px;
@@ -477,8 +491,8 @@ footer {
         gap: 8px;
     }
 
-    nav a {
-        font-size: 11px;
+    .texto-estado {
+        display: none; /* Oculta la palabra "Sistema" en móviles pequeños para ahorrar espacio */
     }
 
     .btn-mapa {
@@ -540,7 +554,6 @@ footer {
 }
 
 @media (max-width: 420px) {
-
     header {
         align-items: flex-start;
     }
@@ -553,12 +566,12 @@ footer {
         font-size: 13px;
     }
 
-    nav a:not(.btn-mapa) {
-        display: none;
+    .estado-contenedor {
+        display: none; /* Oculta temporalmente en pantallas extremadamente angostas */
     }
 
     .btn-mapa {
-        max-width: 72px;
+        max-width: 90px;
         line-height: 1.2;
     }
 }

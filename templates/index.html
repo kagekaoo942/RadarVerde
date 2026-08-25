@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,11 @@
             </h1>
         </div>
         <nav>
-            <a href="#">Inicio</a>
+            <!-- Contenedor del indicador de estado limpio -->
+            <div class="estado-contenedor" title="Estado del Sistema">
+                <span id="indicador-estado" class="circulo-estado"></span>
+                <span class="texto-estado">Comprobando...</span>
+            </div>
             <a href="{{ url_for('mapa') }}" class="btn-mapa">Acceso Mapa</a>
         </nav>
     </header>
@@ -120,7 +125,7 @@
             </div>
         </div>
     </footer>
-
+    <script src="{{ url_for('static', filename='js/estado.js') }}"></script>
 </body>
 
 </html>

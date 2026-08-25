@@ -1,5 +1,5 @@
 import os
-from flask import Flask, abort, render_template, send_from_directory
+from flask import Flask, abort, jsonify, render_template, send_from_directory
 
 app = Flask(__name__, static_folder=None)
 
@@ -15,6 +15,12 @@ def static_files(filename):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/health')
+def health():
+    return jsonify(status='ok')
+
 
 @app.route('/mapa')
 def mapa():
