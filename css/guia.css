@@ -442,15 +442,19 @@ body {
 
 .care-list {
     border-top: 1px solid var(--line);
+    display: grid;
+    gap: 0;
+    grid-template-rows: repeat(3, minmax(40px, auto));
     margin-top: 22px;
     padding-top: 16px;
 }
 
 .care-list > div {
+    align-items: start;
     display: grid;
     gap: 8px;
     grid-template-columns: 78px 1fr;
-    margin-bottom: 9px;
+    margin-bottom: 0;
 }
 
 .care-list dt {
@@ -817,6 +821,11 @@ body {
 
     .species-card > p {
         min-height: auto;
+    }
+
+    .care-list {
+        grid-template-rows: none;
+        row-gap: 9px;
     }
 
     .more-info {
