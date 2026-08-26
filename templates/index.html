@@ -21,7 +21,8 @@
         <div class="logo">
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
             <h1 class="brand-title">
-                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
+                <span class="radar-text">Radar</span>
+                <span class="verde-text">Verde</span>
             </h1>
         </div>
         <nav>
@@ -34,13 +35,35 @@
         </nav>
     </header>
 
-    <!-- Tarjeta inicial -->
-    <section class="card-inicio" id="inicio">
+    <!-- Información de la aplicación -->
+    <section class="app-info" id="inicio">
         <div class="container">
-            <h1>Descubre RadarVerde Premium</h1>
-            <p>Disfruta una experiencia sin anuncios, accede a herramientas ambientales avanzadas y recibe una
-                atención prioritaria para aprovechar todo el potencial de la plataforma.</p>
-            <a href="mailto:contacto@radarverde.com?subject=Inter%C3%A9s%20en%20RadarVerde%20Premium" class="btn-green">Quiero la versión Premium</a>
+            <h1>Radar Verde</h1>
+            <p class="app-info-intro">Una plataforma de análisis territorial que transforma datos ambientales en
+                información clara para cuidar y planificar nuestros espacios verdes.</p>
+            <div class="app-info-grid">
+                <article class="app-info-item">
+                    <div class="app-info-icon"><i class="bi bi-building"></i></div>
+                    <div>
+                        <h2>Explora tu entorno</h2>
+                        <p>Consulta el mapa y descubre la distribución de áreas verdes en San Ramón.</p>
+                    </div>
+                </article>
+                <article class="app-info-item">
+                    <div class="app-info-icon"><i class="bi bi-bar-chart-line"></i></div>
+                    <div>
+                        <h2>Comprende los datos</h2>
+                        <p>Visualiza información territorial para interpretar mejor cada zona.</p>
+                    </div>
+                </article>
+                <article class="app-info-item">
+                    <div class="app-info-icon"><i class="bi bi-tree"></i></div>
+                    <div>
+                        <h2>Planifica en verde</h2>
+                        <p>Encuentra oportunidades para mejorar la calidad ambiental de tu comunidad.</p>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -104,13 +127,23 @@
     <div class="container">
         <div class="cta-banner">
             <div>
-                <h2>¿Quieres ayudar a aumentar la densidad de espacios verdes en tu sector, pero no sabes cómo?</h2>
-                <p>Ingresa a la siguiente guia para resolver todas tus dudas y aprender a plantar arboles para mejorar
+                <h2>Ingresa a la siguiente guia para resolver todas tus dudas y aprender a plantar arboles para mejorar
                     tu sector.</p>
             </div>
             <a href="#" class="btn-guia">Guia de plantacion</a>
         </div>
     </div>
+
+    <!-- ACCESO PREMIUM -->
+    <section class="card-premium">
+        <div class="container">
+            <h2>RadarVerde Premium</h2>
+            <p>Disfruta una experiencia sin anuncios, accede a herramientas ambientales avanzadas y recibe una atención
+                prioritaria para aprovechar todo el potencial que la plataforma puede ofrecer.</p>
+            <a href="mailto:contacto@radarverde.com?subject=Inter%C3%A9s%20en%20RadarVerde%20Premium"
+                class="btn-premium"><span>versión Premium</span></a>
+        </div>
+    </section>
 
     <!-- FOOTER -->
     <footer>

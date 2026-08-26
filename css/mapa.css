@@ -144,6 +144,40 @@ nav a:hover {
     cursor: pointer;
 }
 
+.season-control {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.season-control label {
+    color: #E2E8F0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.season-control label i {
+    color: #00FF87;
+    margin-right: 5px;
+}
+
+.season-control select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid rgba(0, 255, 135, 0.35);
+    border-radius: 6px;
+    background-color: #0B0E14;
+    color: #E2E8F0;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.season-control select:focus {
+    outline: 2px solid rgba(0, 255, 135, 0.35);
+    outline-offset: 1px;
+}
+
 /* CUADRO DE MÉTRICAS */
 .stats-box {
     margin-top: auto;
@@ -167,6 +201,39 @@ nav a:hover {
 
 .stats-box p strong {
     color: #00FF87;
+}
+
+.heat-legend {
+    display: none;
+    background-color: #0B0E14;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 210, 0, 0.35);
+}
+
+.heat-legend h4 {
+    color: #FFFFFF;
+    font-size: 13px;
+    margin: 0 0 10px;
+}
+
+.heat-legend h4 i {
+    color: #FF8A00;
+    margin-right: 5px;
+}
+
+.heat-gradient {
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #00C8FF, #00FF87, #FFE600, #FF8A00, #E60000);
+}
+
+.heat-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #94A3B8;
+    font-size: 11px;
+    margin-top: 5px;
 }
 
 #map {

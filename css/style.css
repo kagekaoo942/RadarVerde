@@ -147,6 +147,70 @@ nav {
     color: #0B0E14;
 }
 
+/* Botón premium */
+.btn-premium {
+    background: linear-gradient(135deg, #FFF2A6 0%, #FFD54A 28%, #DFAF2B 68%, #B8860B 100%);
+    border: 1px solid #FFE27A;
+    color: #241A00;
+    font-weight: 700;
+    padding: 9px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0px 3px 12px rgba(218, 165, 32, 0.3), inset 0px 1px 0px rgba(255, 255, 255, 0.65);
+}
+
+.btn-premium::after {
+    content: "";
+    position: absolute;
+    top: -35%;
+    left: -45%;
+    width: 24%;
+    height: 170%;
+    background: rgba(255, 255, 255, 0.82);
+    transform: skewX(-20deg);
+    filter: blur(4px);
+    pointer-events: none;
+    animation: premium-shine 2.6s ease-in-out infinite;
+}
+
+.btn-premium span {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes premium-shine {
+
+    0%,
+    15% {
+        left: -45%;
+    }
+
+    65%,
+    100% {
+        left: 125%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-premium::after {
+        animation: none;
+    }
+}
+
+.btn-premium:hover {
+    filter: brightness(1.08) saturate(1.12);
+    transform: translateY(-1px);
+    box-shadow: 0px 0px 18px rgba(255, 205, 52, 0.65), inset 0px 1px 0px rgba(255, 255, 255, 0.75);
+    color: #241A00;
+}
+
 /* BOTÓN BASE */
 .btn-mapa {
     padding: 10px 20px;
@@ -197,9 +261,17 @@ nav {
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .btn-mapa:hover::before {
@@ -230,25 +302,89 @@ section {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 0.5px;
 }
 
-/* tarjeta inicial */
-.card-inicio {
+/* Información de la aplicación */
+.app-info {
     text-align: center;
-    padding: 56px 16px 40px 16px;
+    padding: 56px 16px 48px 16px;
     background: radial-gradient(circle at center, rgba(0, 255, 135, 0.08) 0px, rgba(11, 14, 20, 1) 70%);
 }
 
-.card-inicio h1 {
+.app-info h1 {
     font-size: 35px;
     color: #FFF;
     margin-bottom: 13px;
 }
 
-.card-inicio p {
+.app-info-intro {
+    color: #94A3B8;
+    max-width: 650px;
+    margin: 0px auto 24px auto;
+    font-size: 15px;
+}
+
+.app-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 19px;
+    margin-top: 28px;
+    text-align: left;
+}
+
+.app-info-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: rgba(19, 24, 34, 0.82);
+    border: 1px solid rgba(0, 255, 135, 0.15);
+    border-radius: 8px;
+    padding: 19px;
+}
+
+.app-info-icon {
+    flex: 0 0 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(0, 255, 135, 0.1);
+    color: #00FF87;
+    font-size: 22px;
+}
+
+.app-info-item h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #FFF;
+    margin-bottom: 5px;
+}
+
+.app-info-item p {
+    margin: 0;
+    font-size: 13px;
+    color: #94A3B8;
+}
+
+/* Acceso premium */
+.card-premium {
+    text-align: center;
+    padding: 48px 16px 52px 16px;
+    background: radial-gradient(circle at center, rgba(218, 165, 32, 0.1) 0px, rgba(11, 14, 20, 1) 70%);
+}
+
+.card-premium h2 {
+    font-size: 28px;
+    color: #FFF;
+    margin-bottom: 13px;
+}
+
+.card-premium p {
     color: #94A3B8;
     max-width: 580px;
     margin: 0px auto 24px auto;
@@ -492,7 +628,8 @@ footer {
     }
 
     .texto-estado {
-        display: none; /* Oculta la palabra "Sistema" en móviles pequeños para ahorrar espacio */
+        display: none;
+        /* Oculta la palabra "Sistema" en móviles pequeños para ahorrar espacio */
     }
 
     .btn-mapa {
@@ -516,16 +653,35 @@ footer {
         gap: 16px;
     }
 
-    .card-inicio {
+    .app-info {
         padding: 42px 0 32px;
     }
 
-    .card-inicio h1 {
+    .app-info h1 {
         font-size: 27px;
         line-height: 1.25;
     }
 
-    .card-inicio p {
+    .app-info-intro {
+        font-size: 13px;
+    }
+
+    .app-info-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+        margin-top: 22px;
+    }
+
+    .card-premium {
+        padding: 38px 0 42px;
+    }
+
+    .card-premium h2 {
+        font-size: 22px;
+        line-height: 1.25;
+    }
+
+    .card-premium p {
         font-size: 13px;
     }
 
@@ -567,7 +723,8 @@ footer {
     }
 
     .estado-contenedor {
-        display: none; /* Oculta temporalmente en pantallas extremadamente angostas */
+        display: none;
+        /* Oculta temporalmente en pantallas extremadamente angostas */
     }
 
     .btn-mapa {

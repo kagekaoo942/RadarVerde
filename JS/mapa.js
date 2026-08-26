@@ -72,6 +72,111 @@ document.addEventListener('DOMContentLoaded', () => {
         ]]}
     });
 
+    const temporadasCalor = {
+        verano: {
+            franjas: [
+                { sur: -33.5600, norte: -33.5500, intensidad: 0.48 },
+                { sur: -33.5500, norte: -33.5430, intensidad: 0.66 },
+                { sur: -33.5430, norte: -33.5370, intensidad: 0.9 },
+                { sur: -33.5370, norte: -33.5310, intensidad: 1.0 },
+                { sur: -33.5310, norte: -33.5250, intensidad: 0.82 },
+                { sur: -33.5250, norte: -33.5180, intensidad: 0.58 }
+            ],
+            maximo: [-70.6445, -33.5340],
+            minimo: [-70.6500, -33.5540],
+            templado: [-70.6385, -33.5450]
+        },
+        otoño: {
+            franjas: [
+                { sur: -33.5600, norte: -33.5510, intensidad: 0.35 },
+                { sur: -33.5510, norte: -33.5450, intensidad: 0.52 },
+                { sur: -33.5450, norte: -33.5390, intensidad: 0.72 },
+                { sur: -33.5390, norte: -33.5320, intensidad: 0.94 },
+                { sur: -33.5320, norte: -33.5250, intensidad: 0.78 },
+                { sur: -33.5250, norte: -33.5180, intensidad: 0.45 }
+            ],
+            maximo: [-70.6410, -33.5355],
+            minimo: [-70.6370, -33.5220],
+            templado: [-70.6470, -33.5480]
+        },
+        invierno: {
+            franjas: [
+                { sur: -33.5600, norte: -33.5520, intensidad: 0.22 },
+                { sur: -33.5520, norte: -33.5450, intensidad: 0.38 },
+                { sur: -33.5450, norte: -33.5380, intensidad: 0.56 },
+                { sur: -33.5380, norte: -33.5310, intensidad: 0.72 },
+                { sur: -33.5310, norte: -33.5230, intensidad: 0.62 },
+                { sur: -33.5230, norte: -33.5180, intensidad: 0.3 }
+            ],
+            maximo: [-70.6375, -33.5290],
+            minimo: [-70.6500, -33.5530],
+            templado: [-70.6450, -33.5420]
+        },
+        primavera: {
+            franjas: [
+                { sur: -33.5600, norte: -33.5490, intensidad: 0.4 },
+                { sur: -33.5490, norte: -33.5420, intensidad: 0.6 },
+                { sur: -33.5420, norte: -33.5350, intensidad: 0.82 },
+                { sur: -33.5350, norte: -33.5280, intensidad: 0.96 },
+                { sur: -33.5280, norte: -33.5220, intensidad: 0.74 },
+                { sur: -33.5220, norte: -33.5180, intensidad: 0.5 }
+            ],
+            maximo: [-70.6480, -33.5320],
+            minimo: [-70.6390, -33.5480],
+            templado: [-70.6420, -33.5500]
+        }
+    };
+
+    function recortarPorLatitud(coordenadas, limite, conservarMayor) {
+        const puntos = coordenadas.slice(0, -1);
+        const recortados = [];
+
+        const estaDentro = punto => conservarMayor ? punto[1] >= limite : punto[1] <= limite;
+        const interseccion = (inicio, fin) => {
+            const proporcion = (limite - inicio[1]) / (fin[1] - inicio[1]);
+            return [
+                inicio[0] + ((fin[0] - inicio[0]) * proporcion),
+                limite
+            ];
+        };
+
+        for (let indice = 0; indice < puntos.length; indice++) {
+            const actual = puntos[indice];
+            const siguiente = puntos[(indice + 1) % puntos.length];
+            const actualDentro = estaDentro(actual);
+            const siguienteDentro = estaDentro(siguiente);
+
+            if (actualDentro && siguienteDentro) {
+                recortados.push(siguiente);
+            } else if (actualDentro && !siguienteDentro) {
+                recortados.push(interseccion(actual, siguiente));
+            } else if (!actualDentro && siguienteDentro) {
+                recortados.push(interseccion(actual, siguiente), siguiente);
+            }
+        }
+
+        return recortados;
+    }
+
+    function crearFranjaCalor(franja) {
+        let poligono = recortarPorLatitud(perimetroSanRamon, franja.sur, true);
+        poligono = recortarPorLatitud(poligono.concat([poligono[0]]), franja.norte, false);
+        return poligono.length >= 3 ? poligono.concat([poligono[0]]) : [];
+    }
+
+    function crearFeaturesCalor(franjas) {
+        return franjas.map(franja => ({
+            type: 'Feature',
+            properties: { intensidad: franja.intensidad },
+            geometry: {
+                type: 'Polygon',
+                coordinates: [crearFranjaCalor(franja)]
+            }
+        }));
+    }
+
+    const featuresCalor = crearFeaturesCalor(temporadasCalor.verano.franjas);
+
     // 3. UI DEL SLIDER 
     const sliderContainer = document.createElement('div');
     sliderContainer.className = 'solar-slider';
@@ -145,10 +250,200 @@ document.addEventListener('DOMContentLoaded', () => {
             paint: { 'line-color': '#00FF87', 'line-width': 1.5 }
         });
 
+        map.addSource('calor-source', {
+            type: 'geojson',
+            data: { type: 'FeatureCollection', features: featuresCalor }
+        });
+
+        map.addLayer({
+            id: 'calor-layer',
+            type: 'fill',
+            source: 'calor-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'fill-opacity': 0.68,
+                'fill-color': [
+                    'interpolate', ['linear'], ['get', 'intensidad'],
+                    0.4, '#00C8FF',
+                    0.6, '#00FF87',
+                    0.75, '#FFE600',
+                    0.9, '#FF8A00',
+                    1, '#E60000'
+                ]
+            }
+        });
+
+        map.addSource('calor-maximo-source', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                properties: { etiqueta: 'Zona más calurosa' },
+                geometry: { type: 'Point', coordinates: temporadasCalor.verano.maximo }
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-maximo-layer',
+            type: 'symbol',
+            source: 'calor-maximo-source',
+            slot: 'top',
+            layout: {
+                visibility: 'none',
+                'text-field': ['get', 'etiqueta'],
+                'text-size': 12,
+                'text-font': ['Open Sans Bold'],
+                'text-offset': [0, 1.6],
+                'text-allow-overlap': true
+            },
+            paint: {
+                'text-color': '#FFFFFF',
+                'text-halo-color': '#8B0000',
+                'text-halo-width': 1.5
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-maximo-punto',
+            type: 'circle',
+            source: 'calor-maximo-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'circle-radius': 7,
+                'circle-color': '#FF2A00',
+                'circle-stroke-color': '#FFFFFF',
+                'circle-stroke-width': 2
+            }
+        });
+
+        map.addSource('calor-minimo-source', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                properties: { etiqueta: 'Zona más fría' },
+                geometry: { type: 'Point', coordinates: [-70.6500, -33.5540] }
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-minimo-layer',
+            type: 'symbol',
+            source: 'calor-minimo-source',
+            slot: 'top',
+            layout: {
+                visibility: 'none',
+                'text-field': ['get', 'etiqueta'],
+                'text-size': 12,
+                'text-font': ['Open Sans Bold'],
+                'text-offset': [0, 1.6],
+                'text-allow-overlap': true
+            },
+            paint: {
+                'text-color': '#FFFFFF',
+                'text-halo-color': '#0066CC',
+                'text-halo-width': 1.5
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-minimo-punto',
+            type: 'circle',
+            source: 'calor-minimo-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'circle-radius': 7,
+                'circle-color': '#00AEEF',
+                'circle-stroke-color': '#FFFFFF',
+                'circle-stroke-width': 2
+            }
+        });
+
+        map.addSource('calor-templado-source', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                properties: { etiqueta: 'Zona más templada' },
+                geometry: { type: 'Point', coordinates: temporadasCalor.verano.templado }
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-templado-layer',
+            type: 'symbol',
+            source: 'calor-templado-source',
+            slot: 'top',
+            layout: {
+                visibility: 'none',
+                'text-field': ['get', 'etiqueta'],
+                'text-size': 12,
+                'text-font': ['Open Sans Bold'],
+                'text-offset': [0, 1.6],
+                'text-allow-overlap': true
+            },
+            paint: {
+                'text-color': '#FFFFFF',
+                'text-halo-color': '#B87900',
+                'text-halo-width': 1.5
+            }
+        });
+
+        map.addLayer({
+            id: 'calor-templado-punto',
+            type: 'circle',
+            source: 'calor-templado-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'circle-radius': 7,
+                'circle-color': '#FFC107',
+                'circle-stroke-color': '#FFFFFF',
+                'circle-stroke-width': 2
+            }
+        });
+
+        map.moveLayer('perimetro-linea');
+        map.moveLayer('ndvi-borde');
+        map.moveLayer('calor-maximo-punto');
+        map.moveLayer('calor-maximo-layer');
+        map.moveLayer('calor-minimo-punto');
+        map.moveLayer('calor-minimo-layer');
+        map.moveLayer('calor-templado-punto');
+        map.moveLayer('calor-templado-layer');
+
         // 5. CONTROL DE CHECKBOXES Y CÁMARA
         const checkNdvi = document.getElementById('layer-ndvi');
         const checkSombra = document.getElementById('layer-sombra');
         const checkCalor = document.getElementById('layer-calor');
+        const heatLegend = document.getElementById('heat-legend');
+        const temporadaCalor = document.getElementById('temporada-calor');
+        const seasonControl = document.querySelector('.season-control');
+
+        if (temporadaCalor) {
+            temporadaCalor.addEventListener('change', () => {
+                const temporada = temporadasCalor[temporadaCalor.value];
+                map.getSource('calor-source').setData({
+                    type: 'FeatureCollection',
+                    features: crearFeaturesCalor(temporada.franjas)
+                });
+                map.getSource('calor-maximo-source').setData({
+                    type: 'Feature',
+                    properties: { etiqueta: 'Zona más calurosa' },
+                    geometry: { type: 'Point', coordinates: temporada.maximo }
+                });
+                map.getSource('calor-minimo-source').setData({
+                    type: 'Feature',
+                    properties: { etiqueta: 'Zona más fría' },
+                    geometry: { type: 'Point', coordinates: temporada.minimo }
+                });
+                map.getSource('calor-templado-source').setData({
+                    type: 'Feature',
+                    properties: { etiqueta: 'Zona más templada' },
+                    geometry: { type: 'Point', coordinates: temporada.templado }
+                });
+            });
+        }
 
         function actualizarModo(seleccionado) {
             if (checkNdvi) checkNdvi.checked = (seleccionado === 'ndvi');
@@ -158,6 +453,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (seleccionado === 'sombra') {
                 map.setLayoutProperty('ndvi-layer', 'visibility', 'none');
                 map.setLayoutProperty('ndvi-borde', 'visibility', 'none');
+                map.setLayoutProperty('calor-layer', 'visibility', 'none');
+                map.setLayoutProperty('calor-maximo-layer', 'visibility', 'none');
+                map.setLayoutProperty('calor-maximo-punto', 'visibility', 'none');
+                map.setLayoutProperty('calor-minimo-layer', 'visibility', 'none');
+                map.setLayoutProperty('calor-minimo-punto', 'visibility', 'none');
+                map.setLayoutProperty('calor-templado-layer', 'visibility', 'none');
+                map.setLayoutProperty('calor-templado-punto', 'visibility', 'none');
+                if (seasonControl) seasonControl.style.display = 'none';
+                if (heatLegend) heatLegend.style.display = 'none';
                 
                 map.setConfigProperty('basemap', 'show3dObjects', true);
                 map.setConfigProperty('basemap', 'lightPreset', lightPresets[slider.value].id);
@@ -173,11 +477,35 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 map.setConfigProperty('basemap', 'show3dObjects', false);
                 sliderContainer.style.display = 'none';
+                map.setLayoutProperty('ndvi-layer', 'visibility', 'none');
+                map.setLayoutProperty('ndvi-borde', 'visibility', 'none');
 
                 if (seleccionado === 'ndvi') {
                     map.setLayoutProperty('ndvi-layer', 'visibility', 'visible');
                     map.setLayoutProperty('ndvi-borde', 'visibility', 'visible');
                     map.setConfigProperty('basemap', 'lightPreset', 'day'); 
+                    map.setLayoutProperty('calor-layer', 'visibility', 'none');
+                    map.setLayoutProperty('calor-maximo-layer', 'visibility', 'none');
+                    map.setLayoutProperty('calor-maximo-punto', 'visibility', 'none');
+                    map.setLayoutProperty('calor-minimo-layer', 'visibility', 'none');
+                    map.setLayoutProperty('calor-minimo-punto', 'visibility', 'none');
+                    map.setLayoutProperty('calor-templado-layer', 'visibility', 'none');
+                    map.setLayoutProperty('calor-templado-punto', 'visibility', 'none');
+                    if (seasonControl) seasonControl.style.display = 'none';
+                    if (heatLegend) heatLegend.style.display = 'none';
+                }
+
+                if (seleccionado === 'calor') {
+                    map.setLayoutProperty('calor-layer', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-maximo-layer', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-maximo-punto', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-minimo-layer', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-minimo-punto', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-templado-layer', 'visibility', 'visible');
+                    map.setLayoutProperty('calor-templado-punto', 'visibility', 'visible');
+                    if (seasonControl) seasonControl.style.display = 'flex';
+                    if (heatLegend) heatLegend.style.display = 'block';
+                    map.setConfigProperty('basemap', 'lightPreset', 'day');
                 }
 
                 map.flyTo({

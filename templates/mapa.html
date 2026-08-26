@@ -54,11 +54,25 @@
                     <input type="checkbox" id="layer-calor"> Islas de Calor
                 </label>
             </div>
+            <div class="season-control">
+                <label for="temporada-calor"><i class="bi bi-calendar3" aria-hidden="true"></i> Época del año</label>
+                <select id="temporada-calor">
+                    <option value="verano">Verano</option>
+                    <option value="otoño">Otoño</option>
+                    <option value="invierno">Invierno</option>
+                    <option value="primavera">Primavera</option>
+                </select>
+            </div>
             <div class="stats-box">
                 <h4>Diagnóstico de la comuna</h4>
                 <p><strong>Sector:</strong> San Ramón</p>
                 <p><strong>Cobertura vegetal:</strong> 18.4%</p>
                 <p><strong>Prioridad:</strong> Alta</p>
+            </div>
+            <div class="heat-legend" id="heat-legend" aria-label="Leyenda de intensidad térmica">
+                <h4><i class="bi bi-thermometer-half" aria-hidden="true"></i> Intensidad térmica</h4>
+                <div class="heat-gradient"></div>
+                <div class="heat-labels"><span>Menor</span><span>Mayor</span></div>
             </div>
         </aside>
 
