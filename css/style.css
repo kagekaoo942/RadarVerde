@@ -375,7 +375,7 @@ h3 {
 .card-premium {
     text-align: center;
     padding: 48px 16px 52px 16px;
-    background: radial-gradient(circle at center, rgba(218, 165, 32, 0.1) 0px, rgba(11, 14, 20, 1) 70%);
+    background: radial-gradient(circle at center, rgba(0, 255, 135, 0.08) 0px, rgba(11, 14, 20, 1) 70%);
 }
 
 .card-premium h2 {
@@ -625,6 +625,7 @@ footer {
 
     nav {
         gap: 8px;
+        min-width: 0;
     }
 
     .texto-estado {
@@ -633,8 +634,12 @@ footer {
     }
 
     .btn-mapa {
-        padding: 8px 10px;
+        width: clamp(78px, 21vw, 108px);
+        min-height: 40px;
+        padding: 7px 8px;
         text-align: center;
+        line-height: 1.15;
+        white-space: normal;
     }
 
     .container {
@@ -728,7 +733,10 @@ footer {
     }
 
     .btn-mapa {
-        max-width: 90px;
+        width: clamp(72px, 24vw, 90px);
+        min-height: 38px;
+        padding: 6px 7px;
         line-height: 1.2;
     }
 }
+
