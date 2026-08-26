@@ -357,6 +357,15 @@ nav a:hover {
     .stats-box {
         margin-top: 2px;
         padding: 10px;
+        order: 3;
+    }
+
+    .season-control {
+        order: 1;
+    }
+
+    .heat-legend {
+        order: 2;
     }
 
     .stats-box h4 {
