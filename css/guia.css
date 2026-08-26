@@ -55,6 +55,7 @@ body {
     font-weight: 700;
     gap: 14px;
     letter-spacing: .01em;
+    min-width: 0;
 }
 
 .guide-brand img {
@@ -69,11 +70,17 @@ body {
     color: #7ee5a2;
 }
 
+.guide-brand > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .back-link {
     border: 1px solid rgba(168, 215, 149, .35);
     border-radius: 999px;
     font-size: 13px;
     padding: 8px 13px;
+    white-space: nowrap;
     transition: background-color .2s ease, border-color .2s ease;
 }
 
@@ -98,6 +105,15 @@ body {
     justify-content: space-between;
     min-height: 430px;
     padding: 72px 24px 66px;
+}
+
+.hero-copy,
+.section-heading,
+.species-card,
+.more-info-heading,
+.video-title,
+.watering-note > div:last-child {
+    min-width: 0;
 }
 
 .eyebrow {
@@ -159,6 +175,7 @@ body {
     color: var(--muted);
     font-size: 17px;
     max-width: 480px;
+    overflow-wrap: anywhere;
 }
 
 .hero-action {
@@ -250,6 +267,7 @@ body {
     color: var(--ink);
     font-size: 14px;
     max-width: 850px;
+    overflow-wrap: anywhere;
 }
 
 .steps-section,
@@ -307,6 +325,7 @@ body {
     color: var(--muted);
     font-size: 14px;
     max-width: 740px;
+    overflow-wrap: anywhere;
 }
 
 .split-heading {
@@ -350,6 +369,7 @@ body {
     color: #c4b9d9;
     font-size: 14px;
     max-width: 290px;
+    overflow-wrap: anywhere;
     padding-left: 20px;
 }
 
@@ -417,6 +437,7 @@ body {
     color: var(--muted);
     font-size: 14px;
     min-height: 68px;
+    overflow-wrap: anywhere;
 }
 
 .care-list {
@@ -446,6 +467,34 @@ body {
 .care-list dd {
     color: var(--muted);
     font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.care-warning {
+    align-items: flex-start;
+    background: rgba(190, 101, 73, .12);
+    border: 1px solid rgba(242, 196, 95, .42);
+    color: #e6d8c3;
+    display: flex;
+    gap: 14px;
+    margin: -48px auto 72px;
+    max-width: 1112px;
+    padding: 18px 22px;
+}
+
+.care-warning > i {
+    color: #f2c45f;
+    flex: 0 0 auto;
+    font-size: 19px;
+    margin-top: 2px;
+}
+
+.care-warning p {
+    font-size: 13px;
+}
+
+.care-warning strong {
+    color: #f2c45f;
 }
 
 .more-info {
@@ -661,32 +710,55 @@ body {
 
 @media (max-width: 760px) {
     .guide-header {
+        align-items: center;
         min-height: 70px;
-        padding: 10px 16px;
+        gap: 12px;
+        padding: 8px 14px;
     }
 
     .guide-brand {
-        font-size: 21px;
-        gap: 9px;
+        flex: 1 1 auto;
+        font-size: clamp(18px, 5vw, 21px);
+        gap: 7px;
     }
 
     .guide-brand img {
-        height: 54px;
-        width: 54px;
+        height: 46px;
+        width: 46px;
     }
 
     .back-link {
-        font-size: 12px;
+        flex: 0 0 auto;
+        font-size: clamp(10px, 2.8vw, 12px);
+        padding: 7px 9px;
     }
 
     .guide-hero {
         align-items: flex-start;
+        flex-direction: column;
         min-height: auto;
         padding: 55px 20px 48px;
     }
 
+    .hero-copy h1 {
+        font-size: clamp(42px, 13vw, 62px);
+        overflow-wrap: normal;
+    }
+
     .hero-mark {
-        display: none;
+        align-self: center;
+        display: flex;
+        gap: 9px;
+        margin: 34px auto 0;
+        transform: rotate(5deg);
+    }
+
+    .hero-mark i {
+        font-size: clamp(135px, 30vw, 170px);
+    }
+
+    .hero-mark span {
+        font-size: 11px;
     }
 
     .hero-text {
@@ -706,7 +778,7 @@ body {
     .step-row {
         align-items: start;
         gap: 13px;
-        grid-template-columns: 29px 43px minmax(0, 1fr);
+        grid-template-columns: 25px 43px minmax(0, 1fr);
     }
 
     .step-icon {
@@ -751,6 +823,12 @@ body {
         display: block;
         margin: 0 20px 52px;
         padding: 26px 20px;
+    }
+
+    .care-warning {
+        max-width: calc(100% - 40px);
+        margin: -30px 20px 52px;
+        padding: 16px;
     }
 
     .more-info-heading > p:last-child {
