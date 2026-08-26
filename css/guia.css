@@ -75,6 +75,49 @@ body {
     overflow-wrap: anywhere;
 }
 
+.guide-status {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.circulo-estado {
+    background: transparent;
+    border: 1px solid #64748b;
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+    width: 10px;
+}
+
+.circulo-estado.activo {
+    background-color: #00ff87;
+    border-color: #00ff87;
+    box-shadow: 0 0 10px #00ff87, 0 0 18px rgba(0, 255, 135, .55);
+}
+
+.circulo-estado.inactivo {
+    background-color: #ff3333;
+    border-color: #ff3333;
+    box-shadow: 0 0 10px #ff3333, 0 0 18px rgba(255, 51, 51, .45);
+}
+
+.texto-estado {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.texto-estado.activo {
+    color: #00ff87;
+}
+
+.texto-estado.inactivo {
+    color: #ff6b6b;
+}
+
 .back-link {
     border: 1px solid rgba(168, 215, 149, .35);
     border-radius: 999px;
@@ -735,6 +778,14 @@ body {
         flex: 0 0 auto;
         font-size: clamp(10px, 2.8vw, 12px);
         padding: 7px 9px;
+    }
+
+    .guide-status {
+        margin-right: 8px;
+    }
+
+    .guide-status .texto-estado {
+        display: none;
     }
 
     .guide-hero {

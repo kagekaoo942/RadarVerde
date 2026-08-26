@@ -18,6 +18,10 @@
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="">
             <span>Radar<span>Verde</span></span>
         </a>
+        <div class="guide-status" title="Estado del sistema">
+            <span id="indicador-estado" class="circulo-estado"></span>
+            <span class="texto-estado">Comprobando...</span>
+        </div>
         <a class="back-link" href="{{ url_for('index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Volver al
             inicio</a>
     </header>
@@ -239,6 +243,7 @@
 
     <footer class="guide-footer"><span class="footer-motto">Plantar hoy. Respirar mañana.</span></footer>
     <script src="{{ url_for('static', filename='js/guia.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/estado.js') }}"></script>
 </body>
 
 </html>
