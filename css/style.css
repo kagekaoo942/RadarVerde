@@ -660,6 +660,7 @@ footer {
 
     .app-info {
         padding: 42px 0 32px;
+        background: radial-gradient(circle at center, rgba(0, 255, 135, 0.16) 0%, rgba(0, 255, 135, 0.08) 38%, #0B0E14 100%);
     }
 
     .app-info h1 {
@@ -679,6 +680,7 @@ footer {
 
     .card-premium {
         padding: 38px 0 42px;
+        background: radial-gradient(circle at center, rgba(0, 255, 135, 0.16) 0%, rgba(0, 255, 135, 0.08) 38%, #0B0E14 100%);
     }
 
     .card-premium h2 {
