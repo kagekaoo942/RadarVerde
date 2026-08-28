@@ -153,11 +153,15 @@ nav {
     background: #00FF87;
     color: #0B0E14;
     font-weight: 700;
-    padding: 10px 18px;
+    width: 150px;
+    min-height: 50px;
+    padding: 10px 12px;
     border: 1px solid #60EFFF;
     border-radius: 10px;
     text-decoration: none;
     font-size: 14px;
+    line-height: 1.15;
+    text-align: center;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -238,7 +242,9 @@ nav {
 
 /* BOTÓN BASE */
 .btn-mapa {
-    padding: 10px 20px;
+    width: 150px;
+    min-height: 50px;
+    padding: 10px 12px;
     border: none;
     outline: none;
     color: #94A3B8;
@@ -247,6 +253,8 @@ nav {
     z-index: 1;
     border-radius: 12px;
     text-decoration: none;
+    line-height: 1.15;
+    text-align: center;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -684,6 +692,13 @@ footer {
         white-space: normal;
     }
 
+    .btn-login {
+        width: clamp(78px, 21vw, 108px);
+        min-height: 40px;
+        padding: 7px 8px;
+        white-space: normal;
+    }
+
     .container {
         width: 100%;
         padding: 0 16px;
@@ -796,6 +811,13 @@ footer {
     }
 
     .btn-mapa {
+        width: clamp(72px, 24vw, 90px);
+        min-height: 38px;
+        padding: 6px 7px;
+        line-height: 1.2;
+    }
+
+    .btn-login {
         width: clamp(72px, 24vw, 90px);
         min-height: 38px;
         padding: 6px 7px;
