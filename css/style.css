@@ -318,15 +318,20 @@ h3 {
 
 .app-info h1 {
     font-size: 35px;
-    color: #FFF;
+    background: linear-gradient(110deg, #F4FFF7 0%, #D8FFE4 18%, #A5F5BB 34%, #35E878 52%, #00FF87 68%, #16B866 84%, #047A45 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 0px 10px rgba(0, 255, 135, 0.35));
     margin-bottom: 13px;
 }
 
 .app-info-intro {
-    color: #94A3B8;
+    color: #B8CFC4;
     max-width: 650px;
     margin: 0px auto 24px auto;
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 1.65;
 }
 
 .app-info-grid {
@@ -496,20 +501,31 @@ h3 {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.cta-banner h2 {
-    font-size: 21px;
-    color: #FFF;
-    margin-bottom: 5px;
+.cta-copy {
+    flex: 1 1 auto;
+    max-width: 620px;
 }
 
-.cta-banner p {
-    font-size: 14px;
-    color: #94A3B8;
+.cta-banner .cta-question {
+    font-size: 26px;
+    line-height: 1.2;
+    color: #00FF87;
+    margin: 0 0 12px;
+}
+
+.cta-description {
+    max-width: 540px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #E2E8F0;
 }
 
 /* BOTÓN GUÍA */
 .btn-guia {
     position: relative;
+    flex: 0 0 auto;
+    margin-left: 28px;
     padding: 12px 24px;
     color: #FFF;
     text-decoration: none;
@@ -669,7 +685,8 @@ footer {
     }
 
     .app-info-intro {
-        font-size: 13px;
+        font-size: 14px;
+        line-height: 1.6;
     }
 
     .app-info-grid {
@@ -704,15 +721,33 @@ footer {
         padding: 22px 18px;
     }
 
-    .cta-banner h2 {
-        font-size: 18px;
+    .cta-copy {
+        max-width: 100%;
     }
 
-    .footer-content,
-    .socials {
+    .btn-guia {
+        margin-left: 0;
+    }
+
+    .cta-description {
+        font-size: 16px;
+    }
+
+    .cta-banner .cta-question {
+        font-size: 20px;
+    }
+
+    .footer-content {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+    }
+
+    .socials {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        white-space: nowrap;
     }
 }
 

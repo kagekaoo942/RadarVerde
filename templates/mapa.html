@@ -48,11 +48,20 @@
                     <input type="checkbox" id="layer-ndvi" checked> Cobertura Vegetal (NDVI)
                 </label>
                 <label>
-                    <input type="checkbox" id="layer-sombra"> Zonas de Sombra Urbana
+                    <input type="checkbox" id="layer-sombra"> Cantidad de sombras
                 </label>
                 <label>
                     <input type="checkbox" id="layer-calor"> Islas de Calor
                 </label>
+            </div>
+            <div class="shadow-info" id="shadow-info">
+                <h4><i class="bi bi-brightness-high" aria-hidden="true"></i> Sobre las sombras</h4>
+                <p>La vista 3D muestra cómo cambia la sombra urbana durante el día.</p>
+                <p><strong>Observa:</strong> las áreas con mayor sombra pueden ofrecer más protección frente al sol.</p>
+                <div class="shadow-legend" aria-label="Leyenda de potencial de sombra">
+                    <div class="shadow-gradient"></div>
+                    <div class="shadow-labels"><span>Menor</span><span>Mayor</span></div>
+                </div>
             </div>
             <div class="season-control">
                 <label for="temporada-calor"><i class="bi bi-calendar3" aria-hidden="true"></i> Época del año</label>
@@ -63,6 +72,10 @@
                     <option value="primavera">Primavera</option>
                 </select>
             </div>
+            <button type="button" id="toggle-sombra" class="shadow-toggle" aria-pressed="false">
+                <i class="bi bi-brightness-high" aria-hidden="true"></i>
+                Ver cantidad de sombras
+            </button>
             <div class="stats-box">
                 <h4>Diagnóstico de la comuna</h4>
                 <p><strong>Sector:</strong> San Ramón</p>

@@ -177,6 +177,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const featuresCalor = crearFeaturesCalor(temporadasCalor.verano.franjas);
 
+    const zonasSombra = [
+        { lng: -70.6465, lat: -33.5370, r: 520, intensidad: 0.88 },
+        { lng: -70.6385, lat: -33.5300, r: 410, intensidad: 0.62 },
+        { lng: -70.6500, lat: -33.5480, r: 330, intensidad: 0.38 },
+        { lng: -70.6400, lat: -33.5440, r: 260, intensidad: 0.76 },
+        { lng: -70.6460, lat: -33.5525, r: 240, intensidad: 0.70 }
+    ];
+
+    const featuresSombra = zonasSombra.map(zona => ({
+        type: 'Feature',
+        properties: { intensidad: zona.intensidad },
+        geometry: { type: 'Polygon', coordinates: [crearCirculo(zona.lng, zona.lat, zona.r)] }
+    }));
+
+    const featuresPuntosSombra = zonasSombra.map(zona => ({
+        type: 'Feature',
+        properties: { etiqueta: `Sombra ${Math.round(zona.intensidad * 100)}%` },
+        geometry: { type: 'Point', coordinates: [zona.lng, zona.lat] }
+    }));
+
     // 3. UI DEL SLIDER 
     const sliderContainer = document.createElement('div');
     sliderContainer.className = 'solar-slider';
@@ -248,6 +268,67 @@ document.addEventListener('DOMContentLoaded', () => {
             source: 'ndvi-source',
             slot: 'top',
             paint: { 'line-color': '#00FF87', 'line-width': 1.5 }
+        });
+
+        map.addSource('sombra-source', {
+            type: 'geojson',
+            data: { type: 'FeatureCollection', features: featuresSombra }
+        });
+
+        map.addLayer({
+            id: 'sombra-layer',
+            type: 'fill',
+            source: 'sombra-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'fill-opacity': 0.2,
+                'fill-color': [
+                    'interpolate', ['linear'], ['get', 'intensidad'],
+                    0.3, '#60EFFF',
+                    0.6, '#00FF87',
+                    0.9, '#FFE600'
+                ]
+            }
+        });
+
+        map.addSource('sombra-puntos-source', {
+            type: 'geojson',
+            data: { type: 'FeatureCollection', features: featuresPuntosSombra }
+        });
+
+        map.addLayer({
+            id: 'sombra-puntos',
+            type: 'circle',
+            source: 'sombra-puntos-source',
+            slot: 'top',
+            layout: { visibility: 'none' },
+            paint: {
+                'circle-radius': 5,
+                'circle-color': '#FFFFFF',
+                'circle-stroke-color': '#0B0E14',
+                'circle-stroke-width': 2
+            }
+        });
+
+        map.addLayer({
+            id: 'sombra-etiquetas',
+            type: 'symbol',
+            source: 'sombra-puntos-source',
+            slot: 'top',
+            layout: {
+                visibility: 'none',
+                'text-field': ['get', 'etiqueta'],
+                'text-size': 11,
+                'text-font': ['Open Sans Bold'],
+                'text-offset': [0, 1.3],
+                'text-allow-overlap': true
+            },
+            paint: {
+                'text-color': '#FFFFFF',
+                'text-halo-color': '#0B0E14',
+                'text-halo-width': 1.5
+            }
         });
 
         map.addSource('calor-source', {
@@ -415,8 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // 5. CONTROL DE CHECKBOXES Y CÁMARA
         const checkNdvi = document.getElementById('layer-ndvi');
         const checkSombra = document.getElementById('layer-sombra');
+        const toggleSombra = document.getElementById('toggle-sombra');
         const checkCalor = document.getElementById('layer-calor');
         const heatLegend = document.getElementById('heat-legend');
+        const shadowInfo = document.getElementById('shadow-info');
         const temporadaCalor = document.getElementById('temporada-calor');
         const seasonControl = document.querySelector('.season-control');
 
@@ -448,11 +531,18 @@ document.addEventListener('DOMContentLoaded', () => {
         function actualizarModo(seleccionado) {
             if (checkNdvi) checkNdvi.checked = (seleccionado === 'ndvi');
             if (checkSombra) checkSombra.checked = (seleccionado === 'sombra');
+            if (toggleSombra && seleccionado !== 'sombra') {
+                toggleSombra.setAttribute('aria-pressed', 'false');
+                toggleSombra.style.display = 'none';
+            }
             if (checkCalor) checkCalor.checked = (seleccionado === 'calor');
 
             if (seleccionado === 'sombra') {
                 map.setLayoutProperty('ndvi-layer', 'visibility', 'none');
                 map.setLayoutProperty('ndvi-borde', 'visibility', 'none');
+                map.setLayoutProperty('sombra-layer', 'visibility', 'none');
+                map.setLayoutProperty('sombra-puntos', 'visibility', 'none');
+                map.setLayoutProperty('sombra-etiquetas', 'visibility', 'none');
                 map.setLayoutProperty('calor-layer', 'visibility', 'none');
                 map.setLayoutProperty('calor-maximo-layer', 'visibility', 'none');
                 map.setLayoutProperty('calor-maximo-punto', 'visibility', 'none');
@@ -462,6 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 map.setLayoutProperty('calor-templado-punto', 'visibility', 'none');
                 if (seasonControl) seasonControl.style.display = 'none';
                 if (heatLegend) heatLegend.style.display = 'none';
+                if (shadowInfo) shadowInfo.style.display = 'none';
                 
                 map.setConfigProperty('basemap', 'show3dObjects', true);
                 map.setConfigProperty('basemap', 'lightPreset', lightPresets[slider.value].id);
@@ -483,6 +574,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (seleccionado === 'ndvi') {
                     map.setLayoutProperty('ndvi-layer', 'visibility', 'visible');
                     map.setLayoutProperty('ndvi-borde', 'visibility', 'visible');
+                    map.setLayoutProperty('sombra-layer', 'visibility', 'none');
+                    map.setLayoutProperty('sombra-puntos', 'visibility', 'none');
+                    map.setLayoutProperty('sombra-etiquetas', 'visibility', 'none');
                     map.setConfigProperty('basemap', 'lightPreset', 'day'); 
                     map.setLayoutProperty('calor-layer', 'visibility', 'none');
                     map.setLayoutProperty('calor-maximo-layer', 'visibility', 'none');
@@ -493,9 +587,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     map.setLayoutProperty('calor-templado-punto', 'visibility', 'none');
                     if (seasonControl) seasonControl.style.display = 'none';
                     if (heatLegend) heatLegend.style.display = 'none';
+                    if (shadowInfo) shadowInfo.style.display = 'none';
                 }
 
                 if (seleccionado === 'calor') {
+                    map.setLayoutProperty('sombra-layer', 'visibility', 'none');
+                    map.setLayoutProperty('sombra-puntos', 'visibility', 'none');
+                    map.setLayoutProperty('sombra-etiquetas', 'visibility', 'none');
                     map.setLayoutProperty('calor-layer', 'visibility', 'visible');
                     map.setLayoutProperty('calor-maximo-layer', 'visibility', 'visible');
                     map.setLayoutProperty('calor-maximo-punto', 'visibility', 'visible');
@@ -505,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     map.setLayoutProperty('calor-templado-punto', 'visibility', 'visible');
                     if (seasonControl) seasonControl.style.display = 'flex';
                     if (heatLegend) heatLegend.style.display = 'block';
+                    if (shadowInfo) shadowInfo.style.display = 'none';
                     map.setConfigProperty('basemap', 'lightPreset', 'day');
                 }
 
@@ -519,7 +618,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (checkNdvi) checkNdvi.addEventListener('change', () => { if (checkNdvi.checked) actualizarModo('ndvi'); else checkNdvi.checked = true; });
-        if (checkSombra) checkSombra.addEventListener('change', () => { if (checkSombra.checked) actualizarModo('sombra'); else { checkNdvi.checked = true; actualizarModo('ndvi'); } });
+        if (checkSombra) checkSombra.addEventListener('change', () => {
+            if (checkSombra.checked) {
+                actualizarModo('sombra');
+                toggleSombra.style.display = 'inline-flex';
+            } else {
+                toggleSombra.style.display = 'none';
+                actualizarModo('ndvi');
+            }
+        });
+        if (toggleSombra) toggleSombra.addEventListener('click', () => {
+            const sombrasActivas = toggleSombra.getAttribute('aria-pressed') === 'true';
+            const visibilidad = sombrasActivas ? 'none' : 'visible';
+            map.setLayoutProperty('sombra-layer', 'visibility', visibilidad);
+            map.setLayoutProperty('sombra-puntos', 'visibility', visibilidad);
+            map.setLayoutProperty('sombra-etiquetas', 'visibility', visibilidad);
+            toggleSombra.setAttribute('aria-pressed', String(!sombrasActivas));
+            if (shadowInfo) shadowInfo.style.display = sombrasActivas ? 'none' : 'block';
+        });
         if (checkCalor) checkCalor.addEventListener('change', () => { if (checkCalor.checked) actualizarModo('calor'); else { checkNdvi.checked = true; actualizarModo('ndvi'); } });
     });
 });

@@ -53,24 +53,29 @@ body {
     display: flex;
     font-size: 28px;
     font-weight: 700;
-    gap: 14px;
+    gap: 16px;
     letter-spacing: .01em;
     min-width: 0;
 }
 
 .guide-brand img {
-    filter: brightness(1.9) contrast(1.08) drop-shadow(0 0 8px rgba(0, 255, 135, .28));
-    height: 72px;
+    filter: brightness(1.9) contrast(1.08) drop-shadow(0 0 8px rgba(145, 226, 164, .55)) drop-shadow(0 0 16px rgba(46, 166, 111, .25));
+    height: 88px;
     image-rendering: auto;
     object-fit: contain;
-    width: 72px;
+    width: 88px;
 }
 
 .guide-brand span span {
-    color: #7ee5a2;
+    color: inherit;
 }
 
 .guide-brand > span {
+    background: linear-gradient(100deg, #f1faee 5%, #c8efb5 38%, #7dde9a 68%, #39b978 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(125, 222, 154, .18);
     min-width: 0;
     overflow-wrap: anywhere;
 }
@@ -770,8 +775,8 @@ body {
     }
 
     .guide-brand img {
-        height: 46px;
-        width: 46px;
+        height: 56px;
+        width: 56px;
     }
 
     .back-link {
