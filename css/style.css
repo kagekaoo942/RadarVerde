@@ -147,6 +147,30 @@ nav {
     color: #0B0E14;
 }
 
+/* Boton de acceso al login */
+.btn-login {
+    background: #00FF87;
+    color: #0B0E14;
+    font-weight: 700;
+    padding: 10px 18px;
+    border: 1px solid #60EFFF;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.55);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background: #60EFFF;
+    color: #0B0E14;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(96, 239, 255, 0.75);
+}
+
 /* Botón premium */
 .btn-premium {
     background: linear-gradient(135deg, #FFF2A6 0%, #FFD54A 28%, #DFAF2B 68%, #B8860B 100%);
