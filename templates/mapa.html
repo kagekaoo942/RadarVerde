@@ -1,96 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RadarVerde - Comuna de San Ramón</title>
 
     <!-- Mapbox GL JS CSS (Reemplaza el CSS antiguo de Leaflet) -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
     <!-- Hojas de Estilo -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mapa.css') }}">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/mapa.css') }}"
+    />
+  </head>
 
-<body class="map-body">
-
+  <body class="map-body">
     <!-- HEADER COMPACTO -->
     <header>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
-            <h1 class="brand-title">
-                <span class="radar-text">Radar</span><span class="verde-text">Verde</span>
-            </h1>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/logo.png') }}"
+          alt="Logo"
+        />
+        <h1 class="brand-title">
+          <span class="radar-text">Radar</span
+          ><span class="verde-text">Verde</span>
+        </h1>
+      </div>
+      <nav>
+        <div class="estado-contenedor" title="Estado del Sistema">
+          <span id="indicador-estado" class="circulo-estado"></span>
+          <span class="texto-estado">Comprobando...</span>
         </div>
-        <nav>
-            <div class="estado-contenedor" title="Estado del Sistema">
-                <span id="indicador-estado" class="circulo-estado"></span>
-                <span class="texto-estado">Comprobando...</span>
-            </div>
-        </nav>
+      </nav>
     </header>
 
     <!-- INTERFAZ DEL MAPA -->
     <div class="map-container">
-        <!-- PANEL LATERAL -->
-        <aside class="map-sidebar">
-            <h2>San Ramón</h2>
-            <p>Monitoreo geográfico exclusivo de la comuna.</p>
+      <!-- PANEL LATERAL -->
+      <aside class="map-sidebar">
+        <h2>San Ramón</h2>
+        <p>Monitoreo geográfico exclusivo de la comuna.</p>
 
-            <div class="filter-group">
-                <label>
-                    <input type="checkbox" id="layer-ndvi" checked> Cobertura Vegetal (NDVI)
-                </label>
-                <label>
-                    <input type="checkbox" id="layer-sombra"> Cantidad de sombras
-                </label>
-                <label>
-                    <input type="checkbox" id="layer-calor"> Islas de Calor
-                </label>
+        <div class="filter-group">
+          <label>
+            <input type="checkbox" id="layer-ndvi" checked /> Cobertura Vegetal
+            (NDVI)
+          </label>
+          <label>
+            <input type="checkbox" id="layer-sombra" /> Cantidad de sombras
+          </label>
+          <label>
+            <input type="checkbox" id="layer-calor" /> temperaturas
+          </label>
+        </div>
+        <div class="shadow-info" id="shadow-info">
+          <h4>
+            <i class="bi bi-brightness-high" aria-hidden="true"></i> Sobre las
+            sombras
+          </h4>
+          <p>
+            La vista 3D muestra cómo cambia la sombra urbana durante el día.
+          </p>
+          <p>
+            <strong>Observa:</strong> las áreas con mayor sombra pueden ofrecer
+            más protección frente al sol.
+          </p>
+          <div
+            class="shadow-legend"
+            aria-label="Leyenda de potencial de sombra"
+          >
+            <div class="shadow-gradient"></div>
+            <div class="shadow-labels">
+              <span>Menor</span><span>Mayor</span>
             </div>
-            <div class="shadow-info" id="shadow-info">
-                <h4><i class="bi bi-brightness-high" aria-hidden="true"></i> Sobre las sombras</h4>
-                <p>La vista 3D muestra cómo cambia la sombra urbana durante el día.</p>
-                <p><strong>Observa:</strong> las áreas con mayor sombra pueden ofrecer más protección frente al sol.</p>
-                <div class="shadow-legend" aria-label="Leyenda de potencial de sombra">
-                    <div class="shadow-gradient"></div>
-                    <div class="shadow-labels"><span>Menor</span><span>Mayor</span></div>
-                </div>
-            </div>
-            <div class="season-control">
-                <label for="temporada-calor"><i class="bi bi-calendar3" aria-hidden="true"></i> Época del año</label>
-                <select id="temporada-calor">
-                    <option value="verano">Verano</option>
-                    <option value="otoño">Otoño</option>
-                    <option value="invierno">Invierno</option>
-                    <option value="primavera">Primavera</option>
-                </select>
-            </div>
-            <button type="button" id="toggle-sombra" class="shadow-toggle" aria-pressed="false">
-                <i class="bi bi-brightness-high" aria-hidden="true"></i>
-                Ver cantidad de sombras
-            </button>
-            <div class="stats-box">
-                <h4>Diagnóstico de la comuna</h4>
-                <p><strong>Sector:</strong> San Ramón</p>
-                <p><strong>Cobertura vegetal:</strong> 18.4%</p>
-                <p><strong>Prioridad:</strong> Alta</p>
-            </div>
-            <div class="heat-legend" id="heat-legend" aria-label="Leyenda de intensidad térmica">
-                <h4><i class="bi bi-thermometer-half" aria-hidden="true"></i> Intensidad térmica</h4>
-                <div class="heat-gradient"></div>
-                <div class="heat-labels"><span>Menor</span><span>Mayor</span></div>
-            </div>
-        </aside>
+          </div>
+        </div>
+        <div class="season-control">
+          <label for="temporada-calor"
+            ><i class="bi bi-calendar3" aria-hidden="true"></i> Época del
+            año</label
+          >
+          <select id="temporada-calor">
+            <option value="verano">Verano</option>
+            <option value="otoño">Otoño</option>
+            <option value="invierno">Invierno</option>
+            <option value="primavera">Primavera</option>
+          </select>
+        </div>
+        <button
+          type="button"
+          id="toggle-sombra"
+          class="shadow-toggle"
+          aria-pressed="false"
+        >
+          <i class="bi bi-brightness-high" aria-hidden="true"></i>
+          Ver cantidad de sombras
+        </button>
+        <div class="stats-box">
+          <h4>Diagnóstico de la comuna</h4>
+          <p><strong>Sector:</strong> San Ramón</p>
+          <p><strong>Cobertura vegetal:</strong> 18.4%</p>
+          <p><strong>Prioridad:</strong> Alta</p>
+        </div>
+        <div
+          class="heat-legend"
+          id="heat-legend"
+          aria-label="Leyenda de intensidad térmica"
+        >
+          <h4>
+            <i class="bi bi-thermometer-half" aria-hidden="true"></i> Intensidad
+            térmica
+          </h4>
+          <div class="heat-gradient"></div>
+          <div class="heat-labels"><span>Menor</span><span>Mayor</span></div>
+        </div>
+      </aside>
 
-        <!-- MAPA -->
-        <main id="map"></main>
+      <!-- MAPA -->
+      <main id="map"></main>
     </div>
 
     <!-- Script de Mapbox GL JS (Reemplaza los scripts antiguos) -->
@@ -99,5 +144,5 @@
     <!-- Tu script del mapa -->
     <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
     <script src="{{ url_for('static', filename='js/estado.js') }}"></script>
-</body>
+  </body>
 </html>
